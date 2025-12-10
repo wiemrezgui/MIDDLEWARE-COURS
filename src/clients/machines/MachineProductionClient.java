@@ -40,17 +40,6 @@ public class MachineProductionClient {
         System.out.println("[" + id + "] Machine créée: " + libelle);
     }
 
-    // Démarrer la machine
-    public void demarrer() {
-        this.etat = EtatMachine.MARCHE;
-        System.out.println("[" + id + "] Machine démarrée");
-    }
-
-    // Arrêter la machine
-    public void arreter() {
-        this.etat = EtatMachine.ARRETE;
-        System.out.println("[" + id + "] Machine arrêtée");
-    }
 
     // Se connecter à la station
     public boolean connecter() {
@@ -119,21 +108,6 @@ public class MachineProductionClient {
         }
     }
 
-    // Détecter une panne
-    public Anomalie detecterPanne(String description) {
-        System.out.println("[" + id + "] PANNE DÉTECTÉE: " + description);
-        this.etat = EtatMachine.EN_PANNE;
-
-        // Créer l'anomalie
-        Anomalie anomalie = new Anomalie(
-                (int)(Math.random() * 1000),
-                new java.util.Date(),
-                id,
-                description
-        );
-
-        return anomalie;
-    }
 
     // Getters
     public String getId() { return id; }
@@ -154,8 +128,6 @@ public class MachineProductionClient {
                 8080
         );
 
-        // Démarrer la machine
-        machine.demarrer();
 
         // Se connecter une fois au début
         if (!machine.connecter()) {
@@ -175,7 +147,7 @@ public class MachineProductionClient {
 
                 // Déposer la pièce
                 String resultat = machine.deposerPiece(piece);
-
+                System.out.print("\nReponse de la station : " + resultat);
                 // Demander si l'utilisateur veut continuer
                 System.out.print("\nVoulez-vous déposer une autre pièce? (O/N): ");
                 String reponse = console.readLine().trim().toUpperCase();
