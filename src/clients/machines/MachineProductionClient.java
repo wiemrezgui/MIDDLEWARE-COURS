@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class MachineProductionClient {
 
@@ -53,7 +52,7 @@ public class MachineProductionClient {
         System.out.println("[" + id + "] Machine arrêtée");
     }
 
-    // Se connecter à la station (connexion persistante)
+    // Se connecter à la station
     public boolean connecter() {
         if (connecte) {
             System.out.println("[" + id + "] Déjà connecté à la station");
@@ -104,26 +103,6 @@ public class MachineProductionClient {
             System.err.println("[" + id + "] ERREUR: Communication - " + e.getMessage());
             connecte = false;
             return "ERREUR:Communication perdue";
-        }
-    }
-
-    // Déposer plusieurs pièces avec une seule connexion
-    public void deposerPieces(String[] pieces) {
-        if (!connecter()) {
-            System.err.println("[" + id + "] Impossible de se connecter");
-            return;
-        }
-
-        for (String piece : pieces) {
-            String resultat = deposerPiece(piece);
-            System.out.println("[" + id + "] Résultat pour " + piece + ": " + resultat);
-
-            // Petite pause entre les dépôts
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
         }
     }
 
