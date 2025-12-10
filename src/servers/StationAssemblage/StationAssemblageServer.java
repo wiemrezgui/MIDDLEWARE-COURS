@@ -28,7 +28,7 @@ public class StationAssemblageServer implements IStationAssemblage{
             // Initialisation des zones de stockage
             this.zones = new ZoneStockage[nbZones];
             for (int i = 0; i < nbZones; i++) {
-                zones[i] = new ZoneStockage("Zone_" + (i+1), "Libelle zone " + (i+1), 10, 0);
+                zones[i] = new ZoneStockage("Zone_" + (i+1), "Libelle zone " + (i+1), 3, 0);
             }
 
             System.out.println("[Station] " + libelle + " initialisée sur le port " + port);
@@ -47,8 +47,7 @@ public class StationAssemblageServer implements IStationAssemblage{
                     try {
                         // Accepter une connexion client (machine)
                         Socket clientSocket = serverSocket.accept();
-                        System.out.println("[Station] Connexion reçue de: " +
-                                clientSocket.getInetAddress());
+                        System.out.println("[Station] Connexion reçue " );
 
                         // Traiter la requête directement
                         traiterRequeteMachine(clientSocket);
@@ -76,8 +75,7 @@ public class StationAssemblageServer implements IStationAssemblage{
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-                System.out.println("[Station] Prêt à recevoir des messages de " +
-                        clientSocket.getInetAddress());
+                System.out.println("[Station] Prêt à recevoir des messages de ");
 
                 // Boucle pour recevoir plusieurs messages sur la même connexion
                 String message;
@@ -111,8 +109,7 @@ public class StationAssemblageServer implements IStationAssemblage{
                     if (in != null) in.close();
                     if (out != null) out.close();
                     if (clientSocket != null) clientSocket.close();
-                    System.out.println("[Station] Connexion fermée avec " +
-                            (clientSocket != null ? clientSocket.getInetAddress() : "client"));
+                    System.out.println("[Station] Connexion fermée avec le client");
                 } catch (IOException e) {
                     System.err.println("[Station] Erreur fermeture: " + e.getMessage());
                 }
